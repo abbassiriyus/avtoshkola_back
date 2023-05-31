@@ -53,11 +53,12 @@ app.delete("/users/:id", (req, res) => {
 })
 
 app.put("/users/:id", (req, res) => {
+ 
     const id = req.params.id
     const body = req.body
     pool.query(
-        'UPDATE users SET username = $1, email = $2,category=$3 phone=$4, password=$5,videotoken=$6,passportser=$7,position_category=$8,passportnumber=$9 WHERE userid = $10',
-        [body.username, body.email,body.category, body.phone, body.password,body.videotoken,body.passportser,body.position_category,body.passportnumber, id],
+        'UPDATE users SET username = $1, email = $2,category=$3, phone=$4, password=$5,videotoken=$6,passportser=$7,position_category=$8,passportnumber=$9 WHERE userid = $10',
+        [body.username, body.email, body.category, body.phone, body.password, body.videotoken, body.passportser, body.position_category, body.passportnumber, id],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
