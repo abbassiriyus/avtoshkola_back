@@ -13,22 +13,22 @@ CREATE TABLE "users" (
 );
 
 
-CREATE TABLE "User_test" (
-"User_testid" serial PRIMARY KEY,
+CREATE TABLE "user_test" (
+"user_testid" serial PRIMARY KEY,
 "userid" integer NOT NULL,
-"result" TEXT NOT NULL,
+"result1" TEXT NOT NULL,
 "syscreatedatutc" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT current_timestamp
 )
 
 CREATE TABLE "video" (
 "videoid" serial PRIMARY KEY,
-"userid" integer NOT NULL,
-"result" TEXT NOT NULL,
+"video_link" integer NOT NULL,
+"video_title" TEXT NOT NULL,
 "syscreatedatutc" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT current_timestamp
 )
 CREATE TABLE "news" (
-"User_testid" serial PRIMARY KEY,
-"userid" integer NOT NULL,
-"result" TEXT NOT NULL,
+"newsid" serial PRIMARY KEY,
+"news_desc" integer NOT NULL,
+"news_title" TEXT NOT NULL,
 "syscreatedatutc" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT current_timestamp
 )
