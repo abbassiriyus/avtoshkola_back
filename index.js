@@ -71,7 +71,6 @@ app.put("/users/:id", (req, res) => {
 //test
 app.get("/test",(req,res)=>{
     var data=JSON.parse(fs.readFileSync("./test/uzlotin.json","utf-8"))
-    console.log(data);
 var test=[]
 for (let i = 0; i <10; i++) {    
     var key=Math.floor(Math.random() * 700)
