@@ -22,13 +22,13 @@ CREATE TABLE "user_test" (
 
 CREATE TABLE "video" (
 "videoid" serial PRIMARY KEY,
-"video_link" integer NOT NULL,
+"video_link" TEXT NOT NULL,
 "video_title" TEXT NOT NULL,
 "syscreatedatutc" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT current_timestamp
 )
 CREATE TABLE "news" (
 "newsid" serial PRIMARY KEY,
-"news_desc" integer NOT NULL,
+"news_desc" TEXT NOT NULL,
 "news_title" TEXT NOT NULL,
 "syscreatedatutc" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT current_timestamp
 )

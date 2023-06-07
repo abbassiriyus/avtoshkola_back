@@ -9,6 +9,8 @@ app.use(fileUpload())
 app.use(cors())
 app.use(express.static("Images"))
 
+
+
 // users
 app.get("/users", (req, res) => {
     pool.query("SELECT * FROM users", (err, result) => {
