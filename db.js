@@ -5,7 +5,7 @@ const pool = new Client({
     host: "containers-us-west-159.railway.app",
     database: "railway",
     password: "GwsMhPk8uhAC5538ZpBO",
-    port: 6060
+    port: 6446
 })
 
 pool.connect(err => {
