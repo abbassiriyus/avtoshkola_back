@@ -262,11 +262,11 @@ app.put("/news/:id", (req, res) => {
 })
 
 app.get('/contact/', (req, res) => {
-    pool.query("SELECT * FROM contact where contactid=$1", [req.params.id], (err, result) => {
+    pool.query("SELECT * FROM contact", (err, result) => {
         if (!err) {
             res.status(200).send(result.rows)
         } else {
-            res.status(400).send(err)
+            res.send(err)
         }
     })
 })
