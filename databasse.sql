@@ -23,6 +23,7 @@ CREATE TABLE "user_test" (
 CREATE TABLE "video" (
 "videoid" serial PRIMARY KEY,
 "video_link" TEXT NOT NULL,
+"category" integer NOT NULL,
 "video_title" TEXT NOT NULL,
 "syscreatedatutc" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT current_timestamp
 )

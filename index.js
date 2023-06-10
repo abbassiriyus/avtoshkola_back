@@ -166,7 +166,7 @@ app.get('/video/:id', (req, res) => {
 
 app.post("/video", (req, res) => {
     const body = req.body
-    pool.query('INSERT INTO video (video_link, video_title) VALUES ($1, $2) RETURNING *', [body.video_link, body.video_title], (err, result) => {
+    pool.query('INSERT INTO video (video_link, video_title,category) VALUES ($1, $2,$3) RETURNING *', [body.video_link, body.video_title,body.category], (err, result) => {
         if (err) {
             res.status(400).send(err)
         } else {
@@ -190,8 +190,8 @@ app.put("/video/:id", (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(
-        'UPDATE video SET video_link = $1, video_title = $2 WHERE videoid = $3',
-        [body.video_link, body.video_title,id],
+        'UPDATE video SET video_link = $1, video_title = $2, category=$3 WHERE videoid = $4',
+        [body.video_link, body.video_title,body.category, id],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
