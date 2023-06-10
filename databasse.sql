@@ -32,3 +32,11 @@ CREATE TABLE "news" (
 "news_title" TEXT NOT NULL,
 "syscreatedatutc" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT current_timestamp
 )
+
+CREATE TABLE "contact" (
+"contactid" serial PRIMARY KEY,
+"contact_name" TEXT,
+"contact_nomer" TEXT,
+"contact_email" TEXT,
+"syscreatedatutc" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT current_timestamp
+)

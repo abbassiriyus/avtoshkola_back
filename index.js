@@ -261,6 +261,55 @@ app.put("/news/:id", (req, res) => {
     )
 })
 
+app.get('/contact/:id', (req, res) => {
+    pool.query("SELECT * FROM contact where contactid=$1", [req.params.id], (err, result) => {
+        if (!err) {
+            res.status(200).send(result.rows)
+        } else {
+            res.status(400).send(err)
+        }
+    })
+})
+
+app.post("/contact", (req, res) => {
+    const body = req.body
+    pool.query('INSERT INTO contact (contact_name, contact_nomer,contact_email) VALUES ($1, $2, $3) RETURNING *', [body.contact_name, body.contact_nomer,body.contact_email], (err, result) => {
+        if (err) {
+            res.status(400).send(err)
+        } else {
+            res.status(201).send("Created")
+        }
+    })
+})
+
+app.delete("/contact/:id", (req, res) => {
+    const id = req.params.id
+    pool.query('DELETE FROM contact WHERE contactid = $1', [id], (err, result) => {
+        if (err) {
+            res.status(400).send(err)
+        } else {
+            res.status(200).send("Deleted")
+        }
+    })
+})
+
+app.put("/contact/:id", (req, res) => {
+    const id = req.params.id
+    const body = req.body
+    pool.query(
+        'UPDATE contact SET contact_name = $1, contact_nomer = $2,contact_email = $3 WHERE contactid = $4',
+        [body.contact_name, body.contact_nomer, body.contact_email,id],
+        (err, result) => {
+            if (err) {
+                res.status(400).send(err)
+            } else {
+                res.status(200).send("Updated")
+            }
+        }
+    )
+})
+
+
 
 app.listen(5000, () => {
     console.log("Localhost is Running");
