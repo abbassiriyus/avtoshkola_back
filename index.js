@@ -309,7 +309,117 @@ app.put("/contact/:id", (req, res) => {
     )
 })
 
+app.get('/book', (req, res) => {
+    pool.query("SELECT * FROM book", (err, result) => {
+        if (!err) {
+            res.status(200).send(result.rows)
+        } else {
+            res.status(400).send(err)
+        }
+    })
+})
+app.get('/book/:id', (req, res) => {
+    pool.query("SELECT * FROM book where bookid=$1", [req.params.id], (err, result) => {
+        if (!err) {
+            res.status(200).send(result.rows)
+        } else {
+            res.status(400).send(err)
+        }
+    })
+})
+app.post('/book', (req, res) => {
+    const body = req.body
+    var datenew = new Date().toISOString()
+    const { book_file } = req.files;
+    var rendom = Math.floor(Math.random() * 10000000);
+    var img2 = rendom + book_file.name.slice(book_file.name.lastIndexOf('.'));
+    book_file.mv(__dirname + '/Images/' + img2);
+    console.log(img2);
+    pool.query("insert into book (book_file,book_title, syscreatedatutc) values ($1, $2, $3)",
+        [img2,body.book_title,datenew], (err, result) => {
+            if (!err) {
+                res.status(201).send("Created")
+            } else {
+                res.status(400).send(err)
+            }
+        })
+})
+app.delete('/book/:id', (req, res) => {
+    pool.query("SELECT * FROM book where bookid=$1", [req.params.id], (err, result) => {
+      if (result.rows.length>0) {
+        if (!err) {
+            fs.unlink(`./Images/${result.rows[0].book_file}`, function (err) {
+                if (err && err.code == 'ENOENT') {
+                    console.info("File doesn't exist, won't remove it.");
+                } else if (err) {
+                    console.error("Error occurred while trying to remove file");
+                } else {
+                    console.info(`removed`);
+                }
+            });
+        } else {
+            res.status(400).send(err)
+        }
+      }
+    })
 
+    pool.query("DELETE FROM book WHERE bookid=$1", [req.params.id], (err, result) => {
+        if (!err) {
+            if (result.rowCount === 1) {
+              
+                res.status(200).send("Deleted")
+            } else {
+                res.status(400).send("Id not found")
+            }
+        } else {
+            res.status(400).send(err)
+        }
+    })
+})
+app.put('/book/:id', (req, res) => {
+
+    pool.query("SELECT * FROM book where bookid=$1", [req.params.id], (err, result) => {
+        const { book_file }=req.files
+        if (result.rows.length>0) {
+          if (!err){
+              book_file.mv(__dirname + '/Images/' + result.rows[0].book_file);
+          } else {
+              res.status(400).send(err)
+          }
+        }
+      })
+    var datenew = new Date().toISOString()
+    pool.query("SELECT * FROM book where bookid=$1", [req.params.id], (err, result) => {
+        if (result.rows.length>0) {
+          if (!err) {
+              fs.unlink(`./Images/${result.rows[0].book_file}`, function (err) {
+                  if (err && err.code == 'ENOENT') {
+                      console.info("File doesn't exist, won't remove it.");
+                  } else if (err) {
+                      console.error("Error occurred while trying to remove file");
+                  } else {
+                      console.info(`removed`);
+                  }
+              });
+          } else {
+              res.status(400).send(err)
+          }
+        }
+      })
+    const body = req.body
+    pool.query(`UPDATE book SET book=$1 ,syschangedatutc=$3 WHERE bookid=$2`,
+        [body.book, req.params.id, datenew], (err, result) => {
+            if (!err) {
+                if (result.rowCount === 1) {
+                    res.status(200).send("Updated")
+                } else {
+                    res.status(400).send("Id not found")
+                }
+            } else {
+                res.status(400).send(err)
+            }
+        })
+})
 
 app.listen(5000, () => {
     console.log("Localhost is Running");

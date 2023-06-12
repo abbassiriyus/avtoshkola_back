@@ -42,8 +42,8 @@ CREATE TABLE "contact" (
 "syscreatedatutc" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT current_timestamp
 )
 CREATE TABLE "book" (
-"videoid" serial PRIMARY KEY,
-"video_link" TEXT NOT NULL,
-"video_title" TEXT NOT NULL,
+"bookid" serial PRIMARY KEY,
+"book_file" TEXT NOT NULL,
+"book_title" TEXT NOT NULL,
 "syscreatedatutc" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT current_timestamp
 )
